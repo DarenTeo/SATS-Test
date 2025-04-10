@@ -29,7 +29,7 @@
                 if(json.MT_teach) document.getElementById("memorize_t").innerText = "Memorize Save";
                 if(json.MT_resume){
                     document.getElementById("IO76_t").innerText = "Play Resume";
-                    document.getElementById("B101_t").innerText = "Play Resume";
+                    document.getElementById("B101p_t").innerText = "Play Resume";
                 }
             }
         }
@@ -41,6 +41,6 @@
 <body class="content" onload="tryConnectFirst();" ontouchstart="">
 <div id="status" class="area" style="height:8%;font-size:6vmin;font-size:6dvmin;">Connecting...</div>
 <div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="IO76" onclick="IO76()"><span class="text" id="IO76_t">Route 1</span></div></div>
-<div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="B101" onclick="B101()"><span class="text" id="B101_t">Route 2</span></div></div>
+<div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="B101" onclick="B101()"><span class="text" id="B101">Route 2</span></div></div>
 </body>
 </html>
