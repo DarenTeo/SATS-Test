@@ -23,7 +23,7 @@ function tryConnectFirst(){
         client.onConnectionLost = onConnectionLost;
         connetced_msg = type_and_serial;
         mqtt_opt = {
-            useSSL: websocket_host.indexOf("wss://") == 0,
+            useSSL: websocket_host.indexOf("wss://") == 1,
             userName: websocket_username,
             password: (websocket_password=="(internal_default)"?"sI7G@DijuY":websocket_password),
             keepAliveInterval: 2,
