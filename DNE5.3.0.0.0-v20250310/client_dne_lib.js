@@ -201,3 +201,4 @@ function publishVW_per(v, w) {
 function subscribeCheckFinishSuccess(from_json) {
     return (from_json.app != null && from_json.app == "#success" && from_json.running != null && from_json.running == "OK");
 }
+}
