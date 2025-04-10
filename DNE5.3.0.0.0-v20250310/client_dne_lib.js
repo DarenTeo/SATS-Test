@@ -115,7 +115,7 @@ function onMessageArrived(message) {
     if(typeof subscribeParsed == 'function') subscribeParsed(message.destinationName, JSON.parse(json_text = message.payloadString));
 }
 
-setInterval("keepAlive100()", 100);
+setInterval("keepAlive100()", 1000);
 function keepAlive100(){
     if(client_connected && keepAlive && new Date().getTime() - keepAlive.getTime() > 5000){ //later DNE4.9 (version topic)
         keepAlive = null;
