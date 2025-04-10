@@ -12,9 +12,20 @@ function tryConnectFirst(){
     if(typeof loadCookie !== 'undefined') loadCookie();
     if(document.location.search.length > 1){
         var array = document.location.search.substring(1).split('&');
-        var re = /^[A-Z]\w*-\w+-\w+$/;
-        for(var str of array) if(re.test(str)) type_and_serial = str;
+        var regex_serial = /^[A-Z]\w*-\w+-\w+$/;
+        var regex_host = /^h=wss:\/\/mqtt\.flespi\.io$/;
+        var regex_port = /^p=443$/;
+        var regex_user = /^u=CpM9w0L0FpP4ODnJG7bwVSyq10G4OicgxMeUCNI83m0FPcfj7gFSW46NSCFxIFB6$/;
+        var regex_pass = /^pw=.*/;
+        for(var str of array){
+            if(regex_serial.test(str)) type_and_serial = str;
+            if(regex_host.test(str)) websocket_host = str.substring(2);
+            if(regex_port.test(str)) websocket_port = str.substring(2);
+            if(regex_user.test(str)) websocket_username = str.substring(2);
+            if(regex_pass.test(str)) websocket_password = str.substring(3);
+        }
     }
+
     if(websocket_host != null && websocket_port != null && websocket_username != null && websocket_password != null){
         keepAlive = null;
         client_connected = false;
@@ -23,7 +34,7 @@ function tryConnectFirst(){
         client.onConnectionLost = onConnectionLost;
         connetced_msg = type_and_serial;
         mqtt_opt = {
-            useSSL: websocket_host.indexOf("wss://") == 1,
+            useSSL: websocket_host.indexOf("wss://") == 0,
             userName: websocket_username,
             password: (websocket_password=="(internal_default)"?"sI7G@DijuY":websocket_password),
             keepAliveInterval: 2,
@@ -76,6 +87,24 @@ function onMessageArrived(message) {
             if(typeof onConnected == 'function') onConnected();
         }
         keepAlive = new Date(); //later DNE4.9
+
+        const dest_check = message.destinationName.match(new RegExp(/[A-Z]\w*-\w+-\w+/));
+        if(dest_check != null){
+            if(document.getElementById("status") != null && dest_check[0] == type_and_serial){
+                var lamp_status = JSON.parse(message.payloadString).indicator_lamp_io543;
+
+                var color_box = "";
+                color_box += '<div style="background-color:#AFAFAF;display:inline-block;position:relative;top:-15%;white-space:pre;font-weight:bold;">';
+                color_box += '<span> </span>';
+                color_box += '<span style="color:#F00000;-webkit-text-stroke:#F00000 ' + ((lamp_status.substring(0, 1) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
+                color_box += '<span style="margin:0 0.1em;color:#FFD000;-webkit-text-stroke:#FFD000 ' + ((lamp_status.substring(1, 2) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
+                color_box += '<span style="color:#00E000;-webkit-text-stroke:#00E000 ' + ((lamp_status.substring(2, 3) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
+                color_box += '<span> </span>';
+                color_box += '</div>';
+
+                document.getElementById("status").innerHTML = connetced_msg + "　" + color_box;
+            }
+        }
     }
     if(typeof subscribeParse == 'function') subscribeParse(message);
     if(typeof subscribeParsed == 'function') subscribeParsed(message.destinationName, JSON.parse(json_text = message.payloadString));
