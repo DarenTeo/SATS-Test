@@ -22,9 +22,14 @@ function tryConnectFirst(){
             if(regex_host.test(str)) websocket_host = str.substring(2);
             if(regex_port.test(str)) websocket_port = str.substring(2);
             if(regex_user.test(str)) websocket_username = str.substring(2);
-            if(regex_pass.test(str)) websocket_password = str.substring(3);
+            if(regex_pass.test(str)) {
+                if (str !== null && str !== undefined && str.length > 3) {
+                    websocket_password = str.substring(3);
+                } else {
+                    websocket_password = null;
+                }
+            }
         }
-    }
 
     if(websocket_host != null && websocket_port != null && websocket_username != null && websocket_password != null){
         keepAlive = null;
