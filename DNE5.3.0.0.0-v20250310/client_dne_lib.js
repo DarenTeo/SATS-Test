@@ -91,18 +91,21 @@ function onMessageArrived(message) {
         const dest_check = message.destinationName.match(new RegExp(/[A-Z]\w*-\w+-\w+/));
         if(dest_check != null){
             if(document.getElementById("status") != null && dest_check[0] == type_and_serial){
-                var lamp_status = JSON.parse(message.payloadString).indicator_lamp_io543;
+                var json_parse = JSON.parse(message.payloadString);
+                if(json_parse.indicator_lamp_io543 != undefined){
+                    var lamp_status = json_parse.indicator_lamp_io543;
 
-                var color_box = "";
-                color_box += '<div style="background-color:#AFAFAF;display:inline-block;position:relative;top:-15%;white-space:pre;font-weight:bold;">';
-                color_box += '<span> </span>';
-                color_box += '<span style="color:#F00000;-webkit-text-stroke:#F00000 ' + ((lamp_status.substring(0, 1) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
-                color_box += '<span style="margin:0 0.1em;color:#FFD000;-webkit-text-stroke:#FFD000 ' + ((lamp_status.substring(1, 2) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
-                color_box += '<span style="color:#00E000;-webkit-text-stroke:#00E000 ' + ((lamp_status.substring(2, 3) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
-                color_box += '<span> </span>';
-                color_box += '</div>';
+                    var color_box = "";
+                    color_box += '<div style="background-color:#AFAFAF;display:inline-block;position:relative;top:-15%;white-space:pre;font-weight:bold;">';
+                    color_box += '<span> </span>';
+                    color_box += '<span style="color:#F00000;-webkit-text-stroke:#F00000 ' + ((lamp_status.substring(0, 1) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
+                    color_box += '<span style="margin:0 0.1em;color:#FFD000;-webkit-text-stroke:#FFD000 ' + ((lamp_status.substring(1, 2) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
+                    color_box += '<span style="color:#00E000;-webkit-text-stroke:#00E000 ' + ((lamp_status.substring(2, 3) == "1")?'0.2em;">&#x25A0':'0.05em;">&#x25A1') + '</span>';
+                    color_box += '<span> </span>';
+                    color_box += '</div>';
 
-                document.getElementById("status").innerHTML = connetced_msg + "　" + color_box;
+                    document.getElementById("status").innerHTML = connetced_msg + "　" + color_box;
+                }
             }
         }
     }
