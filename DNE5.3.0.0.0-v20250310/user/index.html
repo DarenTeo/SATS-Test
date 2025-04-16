@@ -23,7 +23,9 @@
                     document.getElementById("gate1").setAttribute("onclick", "stop()");
                     document.getElementById("gate2").setAttribute("onclick", "stop()");
                     document.getElementById("end").setAttribute("onclick", "stop()");
-                    document.getElementById("start").setAttribute("onclick", "stop()");
+                    document.getElementById("startG1").setAttribute("onclick", "stop()");
+                    document.getElementById("startG2").setAttribute("onclick", "stop()");
+                    document.getElementById("startEnd").setAttribute("onclick", "stop()");
                 }else{
                     document.getElementById("gate1_t").innerText = "Gate 1";
                     document.getElementById("gate2_t").innerText = "Gate 2";
@@ -32,21 +34,27 @@
                     document.getElementById("gate1").setAttribute("onclick", "gate1()");
                     document.getElementById("gate2").setAttribute("onclick", "gate2()");
                     document.getElementById("end").setAttribute("onclick", "end()");
-                    document.getElementById("start").setAttribute("onclick", "start()");
+                    document.getElementById("startG1").setAttribute("onclick", "startG1()");
+                    document.getElementById("startG2").setAttribute("onclick", "startG2()");
+                    document.getElementById("startEnd").setAttribute("onclick", "startEnd()");
                 }
                 if(json.MT_teach) document.getElementById("memorize_t").innerText = "Memorize Save";
                 if(json.MT_resume){
                     document.getElementById("gate1_t").innerText = "Play Resume";
                     document.getElementById("gate2_t").innerText = "Play Resume";
                     document.getElementById("end_t").innerText = "Play Resume";
-                    document.getElementById("start_t").innerText = "Play Resume";
+                    document.getElementById("startG1_t").innerText = "Play Resume";
+                    document.getElementById("startG2_t").innerText = "Play Resume";
+                    document.getElementById("startEnd_t").innerText = "Play Resume";
                 }
             }
         }
         function gate1(){ publishCmdParam('app-memorytrace', '--map B101'); }
         function gate2(){ publishCmdParam('app-memorytrace', '--map B101+B102'); }
         function end(){ publishCmdParam('app-memorytrace', '--map B101+B102+B103'); }
-        function start(){ publishCmdParam('app-memorytrace', '--map B104'); }               
+        function startG1(){ publishCmdParam('app-memorytrace', '--map B102+B103+B104'); }        
+        function startG2(){ publishCmdParam('app-memorytrace', '--map B103+B104'); } 
+        function startEnd(){ publishCmdParam('app-memorytrace', '--map B104'); } 
         function stop(){ publishCmd(''); }
     </script>
 </head>
@@ -55,6 +63,8 @@
 <div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="gate1" onclick="gate1()"><span class="text" id="gate1_t">Gate 1</span></div></div>
 <div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="gate2" onclick="gate2()"><span class="text" id="gate2_t">Gate 2</span></div></div>
 <div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="end" onclick="end()"><span class="text" id="end_t">End</span></div></div>
-<div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="start" onclick="start()"><span class="text" id="start_t">Start</span></div></div>
+<div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="start" onclick="startG1()"><span class="text" id="startG1_t">Start from Gate 1</span></div></div>
+<div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="start" onclick="startG2()"><span class="text" id="startG2_t">Start from Gate 2</span></div></div>
+<div class="area" style="height:31%;font-size:10vmin;font-size:10dvmin;"><div class="button" id="start" onclick="startEnd()"><span class="text" id="startEnd_t">Start from end</span></div></div>
 </body>
 </html>
